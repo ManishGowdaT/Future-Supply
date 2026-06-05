@@ -7,11 +7,12 @@ All calculation engines (`matchingEngine`, `riskEngine`, `replacementEngine`, `y
 
 ### 2. Repository Pattern & Backend Decoupling
 The UI and application services interface strictly with repository abstractions:
-- `ISupplyPositionRepository`
-- `IDemandPositionRepository`
-- `IForwardCommitmentRepository`
-- `IQCRecordRepository`
-- `IAuditEventRepository`
+- `ISupplyRepository`
+- `IDemandRepository`
+- `ICommitmentRepository`
+- `IQCRepository`
+- `IRiskEventRepository`
+- `IAuditRepository`
 
 In this MVP, these are implemented via a reactive `InMemoryRepository` with event emission. When transitioning to a production backend, this layer is replaced by HTTP clients (`Axios/Fetch` -> `NestJS/Spring Boot` -> `PostgreSQL + PostGIS`) without touching domain engine logic.
 
@@ -34,7 +35,7 @@ Simulated external systems (Weather events, Escrow bank transitions, Logistics G
 - **Decision**: Weight fulfillment probability (30%), harvest timing (20%), geographic proximity (15%), quality probability (15%), price (10%), farmer reliability (5%), and logistics cost (5%).
 - **Consequence**: Buyers can view a transparent "Why this match?" score breakdown for every recommendation.
 
-### ADR-003: Immutable Event Stream for Auditing & State Transitions
+### ADR-003: Audit Events for Operational State Transitions
 - **Status**: Accepted
 - **Context**: Disintermediation, fraud, and disputes require tamper-proof operational auditability.
-- **Decision**: Every commitment transition, shortfall alert, QC grading, and weather shock records an immutable `AuditEvent` with timestamp, actor, and previous/new state.
+- **Decision**: Every commitment transition, shortfall alert, QC grading, and weather shock is intended to record an `AuditEvent` with timestamp, actor, and previous/new state. The MVP stores events in memory; durable append-only storage and tamper-evidence remain future work.

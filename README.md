@@ -1,6 +1,6 @@
 # FutureSupply — Predictive Fresh Produce Procurement Network
 
-> **A production-grade, role-based predictive B2B procurement network connecting forward farmer supply positions with commercial buyer demand requirements.**
+> **A role-based predictive B2B procurement prototype connecting forward farmer supply positions with commercial buyer demand requirements.**
 
 ---
 
@@ -11,7 +11,7 @@ Unlike classifieds or spot marketplaces, **FutureSupply** solves the structural 
 3. **Continuous Fulfillment Risk Engine**: Deterministic monitoring of agricultural, farmer, commercial, and logistics risks.
 4. **1-Click Automated Replacement Sourcing**: Live shortfall detection that instantly recommends and locks in nearby verified backup supply when risk rises.
 5. **Traceable Quality & Freshness Assurance**: Standardized QC grading (Grade A, B, Processing), `ProduceBatch` traceability, and commodity-specific shelf-life decay calculations.
-6. **Commercial Commitments & Simulated Escrow**: State-machine governed forward orders with RBI-compliant payment stage milestones.
+6. **Commercial Commitments & Simulated Escrow**: State-machine governed forward orders with simulated payment stage milestones (not a live payment or compliance integration).
 
 ---
 
@@ -40,6 +40,10 @@ UI (Farmer, Buyer, QC/Logistics, Platform Admin)
 ```
 
 ---
+
+## Prototype limitations
+
+The application uses seeded data and an in-memory repository. Role switching is a demonstration, not authentication or authorization. Yield, risk, quality and escrow outputs are simulated and are not validated commercial guarantees. Reloading the application resets in-memory business data.
 
 ## 🚀 Quick Start
 

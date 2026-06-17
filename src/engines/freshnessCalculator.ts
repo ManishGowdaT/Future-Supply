@@ -61,8 +61,8 @@ export function calculateFreshness(
   const hoursDeducted = totalTransitHours * tempMultiplier;
   const daysLostInTransit = hoursDeducted / 24;
 
-  const remainingDays = Math.max(0.5, Number((baseShelfLife - daysLostInTransit).toFixed(1)));
-  const freshnessScore = Math.min(100, Math.max(10, Math.round((remainingDays / baseShelfLife) * 100)));
+  const remainingDays = Math.max(0, Number((baseShelfLife - daysLostInTransit).toFixed(1)));
+  const freshnessScore = Math.min(100, Math.max(0, Math.round((remainingDays / baseShelfLife) * 100)));
 
   const riskStatus: FreshnessResult['riskStatus'] =
     remainingDays >= minRequiredDays + 1 ? 'FRESH' : remainingDays >= minRequiredDays ? 'MODERATE' : 'DEGRADED';

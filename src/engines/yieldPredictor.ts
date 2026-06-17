@@ -53,7 +53,7 @@ const STAGE_CONFIDENCE_MAP: Record<CropStage, number> = {
 
 function addDays(dateStr: string, days: number): string {
   const d = new Date(dateStr);
-  d.setDate(d.getDate() + Math.round(days));
+  d.setUTCDate(d.getUTCDate() + Math.round(days));
   return d.toISOString().split('T')[0];
 }
 

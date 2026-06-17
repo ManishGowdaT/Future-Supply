@@ -64,14 +64,17 @@ export function calculateFreshness(
   const remainingDays = Math.max(0, Number((baseShelfLife - daysLostInTransit).toFixed(1)));
   const freshnessScore = Math.min(100, Math.max(0, Math.round((remainingDays / baseShelfLife) * 100)));
 
-  const riskStatus: FreshnessResult['riskStatus'] =
-    remainingDays >= minRequiredDays + 1 ? 'FRESH' : remainingDays >= minRequiredDays ? 'MODERATE' : 'DEGRADED';
+  const validRequirement = Number.isFinite(minRequiredDays) && minRequiredDays >= 0;
+  const meetsRequirement = validRequirement && remainingDays > 0 && remainingDays >= minRequiredDays;
+  const riskStatus: FreshnessResult['riskStatus'] = !meetsRequirement
+    ? 'DEGRADED'
+    : remainingDays >= minRequiredDays + 1 ? 'FRESH' : 'MODERATE';
 
   return {
     freshnessScorePercent: freshnessScore,
     estimatedRemainingShelfLifeDays: remainingDays,
     shelfLifeDecayRatePerDay: Number((1.0 / baseShelfLife).toFixed(2)),
-    meetsBuyerRequirement: remainingDays >= minRequiredDays,
+    meetsBuyerRequirement: meetsRequirement,
     riskStatus
   };
 }

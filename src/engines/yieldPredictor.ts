@@ -61,7 +61,8 @@ export function predictYield(input: YieldPredictionInput): YieldPredictionResult
   const benchmark = CROP_BENCHMARKS[input.cropType] || CROP_BENCHMARKS.Tomato;
   const irrigationMultiplier = input.irrigationType === 'Drip' ? benchmark.dripBonusFactor : 1.0;
 
-  const baseYield = input.acreage * benchmark.avgYieldKgPerAcre * irrigationMultiplier;
+  const acreage = Number.isFinite(input.acreage) ? Math.max(0, input.acreage) : 0;
+  const baseYield = acreage * benchmark.avgYieldKgPerAcre * irrigationMultiplier;
   const confidence = STAGE_CONFIDENCE_MAP[input.cropStage] || 0.70;
 
   // Probabilistic variance calculation: uncertainty narrows as crop matures

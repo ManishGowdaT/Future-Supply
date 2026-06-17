@@ -33,7 +33,16 @@ export function calculateFreshness(
 
   const harvestTime = new Date(input.harvestTimestamp).getTime();
   const pickupTime = new Date(input.pickupDepartureTime).getTime();
-  const farmToPickupHours = Math.max(0, (pickupTime - harvestTime) / (1000 * 60 * 60));
+  if (!Number.isFinite(harvestTime) || !Number.isFinite(pickupTime) || pickupTime < harvestTime) {
+    return {
+      freshnessScorePercent: 0,
+      estimatedRemainingShelfLifeDays: 0,
+      shelfLifeDecayRatePerDay: Number((1.0 / baseShelfLife).toFixed(2)),
+      meetsBuyerRequirement: false,
+      riskStatus: 'DEGRADED'
+    };
+  }
+  const farmToPickupHours = (pickupTime - harvestTime) / (1000 * 60 * 60);
 
   const totalTransitHours = farmToPickupHours + input.transitHours;
 

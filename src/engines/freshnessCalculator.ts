@@ -44,6 +44,15 @@ export function calculateFreshness(
   }
   const farmToPickupHours = (pickupTime - harvestTime) / (1000 * 60 * 60);
 
+  if (!Number.isFinite(input.transitHours) || input.transitHours < 0) {
+    return {
+      freshnessScorePercent: 0,
+      estimatedRemainingShelfLifeDays: 0,
+      shelfLifeDecayRatePerDay: Number((1.0 / baseShelfLife).toFixed(2)),
+      meetsBuyerRequirement: false,
+      riskStatus: 'DEGRADED'
+    };
+  }
   const totalTransitHours = farmToPickupHours + input.transitHours;
 
   // Temperature acceleration multiplier: ambient heat speeds up respiration decay

@@ -65,7 +65,7 @@ export function scoreSupplyMatch(
   });
 
   // Factor 3: Geographic Proximity (15% weight)
-  const distanceKm = supply.location.distanceKmToBangaloreCenter || 50;
+  const distanceKm = supply.location.distanceKmToBangaloreCenter ?? 50;
   // 30km = 100 score, 100km = 40 score
   const proximityScore = Math.max(20, Math.min(100, Math.round(110 - distanceKm * 0.75)));
   factors.push({
@@ -107,7 +107,7 @@ export function scoreSupplyMatch(
   });
 
   // Factor 6: Farmer Reliability (5% weight)
-  const relScore = supply.farmerReliability?.overallScore || 75;
+  const relScore = supply.farmerReliability?.overallScore ?? 75;
   factors.push({
     factor: 'Farmer Reliability Score',
     weightPercent: 5,

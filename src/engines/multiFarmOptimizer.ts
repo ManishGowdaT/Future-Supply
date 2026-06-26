@@ -27,8 +27,7 @@ export function optimizeMultiFarmMatchPlan(
   // 3. Sort by overall match score descending
   scoredMatches.sort((a, b) => b.overallMatchScore - a.overallMatchScore);
 
-  let remainingNeededKg = demand.requiredQuantityKg - demand.securedQuantityKg;
-  if (remainingNeededKg <= 0) remainingNeededKg = demand.requiredQuantityKg;
+  let remainingNeededKg = Math.max(0, demand.requiredQuantityKg - demand.securedQuantityKg);
 
   const selectedMatches: SupplyMatch[] = [];
   let totalAllocatedKg = 0;

@@ -64,8 +64,10 @@ export function optimizeMultiFarmMatchPlan(
     ? Math.round(totalWeightedFulfillment / totalAllocatedKg)
     : 0;
 
-  const summary = selectedMatches.length === 1
-    ? `Fully matched via single high-confidence farm (${selectedMatches[0].supplyPosition.farmName}).`
+  const summary = demand.securedQuantityKg >= demand.requiredQuantityKg
+    ? 'Demand is already fully secured; no additional capacity is required.'
+    : selectedMatches.length === 1
+    ? `${remainingNeededKg <= 0 ? 'Remaining demand covered' : 'Partial allocation'} via ${selectedMatches[0].supplyPosition.farmName}.`
     : selectedMatches.length > 1
     ? `Aggregated ${selectedMatches.length} regional farms across ${Array.from(new Set(selectedMatches.map(m => m.supplyPosition.location.region))).join(', ')} to achieve ${coveragePercent}% coverage with ${avgFulfillment}% fulfillment certainty.`
     : `No sufficient available forward capacity found for ${demand.cropType}.`;

@@ -154,6 +154,9 @@ export class InMemoryRepository
   }
 
   async reserveCapacity(id: string, quantityKg: number): Promise<boolean> {
+    if (!Number.isFinite(quantityKg) || quantityKg <= 0) {
+      throw new Error('Reservation quantity must be a positive finite number.');
+    }
     const item = this.supplies.get(id);
     if (!item) return false;
 

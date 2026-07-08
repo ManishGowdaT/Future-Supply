@@ -78,7 +78,7 @@ export class InMemoryRepository
 
   async getById(id: string): Promise<FutureSupplyPosition | null> {
     const item = this.supplies.get(id);
-    return item ? { ...item } : null;
+    return item ? structuredClone(item) : null;
   }
 
   async getByFarmer(farmerId: string): Promise<FutureSupplyPosition[]> {

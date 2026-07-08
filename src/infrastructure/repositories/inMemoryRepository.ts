@@ -62,13 +62,13 @@ export class InMemoryRepository
     this.riskEvents.clear();
     this.auditLogs = [];
 
-    SEED_SUPPLY_POSITIONS.forEach(s => this.supplies.set(s.id, { ...s }));
-    SEED_DEMAND_POSITIONS.forEach(d => this.demands.set(d.id, { ...d }));
-    SEED_COMMITMENTS.forEach(c => this.commitments.set(c.id, { ...c }));
-    SEED_PRODUCE_BATCHES.forEach(b => this.batches.set(b.id, { ...b }));
-    SEED_QC_RECORDS.forEach(q => this.qcRecords.set(q.id, { ...q }));
-    SEED_RISK_EVENTS.forEach(r => this.riskEvents.set(r.id, { ...r }));
-    this.auditLogs = [...SEED_AUDIT_EVENTS];
+    SEED_SUPPLY_POSITIONS.forEach(s => this.supplies.set(s.id, structuredClone(s)));
+    SEED_DEMAND_POSITIONS.forEach(d => this.demands.set(d.id, structuredClone(d)));
+    SEED_COMMITMENTS.forEach(c => this.commitments.set(c.id, structuredClone(c)));
+    SEED_PRODUCE_BATCHES.forEach(b => this.batches.set(b.id, structuredClone(b)));
+    SEED_QC_RECORDS.forEach(q => this.qcRecords.set(q.id, structuredClone(q)));
+    SEED_RISK_EVENTS.forEach(r => this.riskEvents.set(r.id, structuredClone(r)));
+    this.auditLogs = structuredClone(SEED_AUDIT_EVENTS);
   }
 
   // --- ISupplyRepository ---

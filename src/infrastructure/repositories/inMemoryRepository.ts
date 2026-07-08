@@ -175,6 +175,9 @@ export class InMemoryRepository
   }
 
   async releaseCapacity(id: string, quantityKg: number): Promise<boolean> {
+    if (!Number.isFinite(quantityKg) || quantityKg < 0) {
+      throw new Error('Release quantity must be a nonnegative finite number.');
+    }
     const item = this.supplies.get(id);
     if (!item) return false;
     item.reservedQuantityKg = Math.max(0, item.reservedQuantityKg - quantityKg);

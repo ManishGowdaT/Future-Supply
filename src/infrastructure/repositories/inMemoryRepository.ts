@@ -73,7 +73,7 @@ export class InMemoryRepository
 
   // --- ISupplyRepository ---
   async getAll(): Promise<FutureSupplyPosition[]> {
-    return Array.from(this.supplies.values());
+    return Array.from(this.supplies.values(), item => structuredClone(item));
   }
 
   async getById(id: string): Promise<FutureSupplyPosition | null> {
@@ -82,17 +82,17 @@ export class InMemoryRepository
   }
 
   async getByFarmer(farmerId: string): Promise<FutureSupplyPosition[]> {
-    return Array.from(this.supplies.values()).filter(s => s.farmerId === farmerId);
+    return Array.from(this.supplies.values()).filter(s => s.farmerId === farmerId).map(item => structuredClone(item));
   }
 
   async getByCrop(cropType: CropType): Promise<FutureSupplyPosition[]> {
-    return Array.from(this.supplies.values()).filter(s => s.cropType === cropType);
+    return Array.from(this.supplies.values()).filter(s => s.cropType === cropType).map(item => structuredClone(item));
   }
 
   async getByRegion(region: string): Promise<FutureSupplyPosition[]> {
     return Array.from(this.supplies.values()).filter(
       s => s.location.region.toLowerCase() === region.toLowerCase()
-    );
+    ).map(item => structuredClone(item));
   }
 
   async create(position: Omit<FutureSupplyPosition, 'id' | 'createdAt' | 'updatedAt'>): Promise<FutureSupplyPosition> {

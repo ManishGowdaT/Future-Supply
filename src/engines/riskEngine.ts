@@ -97,7 +97,7 @@ export function evaluateCommitmentRisk(
     previousFulfillmentProb: previousProb,
     newFulfillmentProb: finalProb,
     riskLevel,
-    primaryRiskFactor: matchingEvents.length > 0 ? primaryRisk : (finalProb < 85 ? 'Varietal Yield Uncertainty' : 'Optimal Conditions'),
+    primaryRiskFactor: primaryRisk !== 'Optimal Conditions' ? primaryRisk : (finalProb < 85 ? 'Varietal Yield Uncertainty' : 'Optimal Conditions'),
     projectedShortfallKg: shortfallKg,
     isShortfallTriggered: isShortfall,
     activeRiskEvents: matchingEvents,

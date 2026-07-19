@@ -36,8 +36,8 @@ export function findAutomatedReplacements(
 
   // Score candidate suitability
   const scoredCandidates: ReplacementCandidate[] = candidates.map(s => {
-    const distanceKm = s.location.distanceKmToBangaloreCenter || 50;
-    const reliability = s.farmerReliability?.overallScore || 75;
+    const distanceKm = s.location.distanceKmToBangaloreCenter ?? 50;
+    const reliability = s.farmerReliability?.overallScore ?? 75;
     const gradeA = Math.round(s.expectedGradeAProbability * 100);
     const price = s.askingPricePerKg;
 

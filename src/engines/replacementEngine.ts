@@ -12,6 +12,9 @@ export function findAutomatedReplacements(
   allSupplies: FutureSupplyPosition[],
   activeRiskEvents: RiskEvent[] = []
 ): ReplacementPlan {
+  if (!Number.isFinite(shortfallKg) || shortfallKg < 0) {
+    throw new Error('Shortfall quantity must be a nonnegative finite number.');
+  }
   // Find affected regions to avoid routing to another farm under the same shock
   const affectedRegions = new Set(
     activeRiskEvents
@@ -90,7 +93,7 @@ export function findAutomatedReplacements(
     : commitment.unitPricePerKg;
 
   // With replacement secured, fulfillment prob is restored to 95-98%
-  const restoredProb = allocatedKg >= shortfallKg ? 96 : Math.round((allocatedKg / shortfallKg) * 90);
+  const restoredProb = shortfallKg === 0 ? commitment.fulfillmentProbability : allocatedKg >= shortfallKg ? 96 : Math.round((allocatedKg / shortfallKg) * 90);
 
   return {
     shortfallAlertId: `SF-ALERT-${Date.now().toString().slice(-6)}`,

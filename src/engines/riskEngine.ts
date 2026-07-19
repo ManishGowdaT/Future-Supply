@@ -22,7 +22,7 @@ export function evaluateCommitmentRisk(
   supply: FutureSupplyPosition | null,
   activeEvents: RiskEvent[] = []
 ): CommitmentRiskAssessment {
-  const previousProb = commitment.fulfillmentProbability || 90;
+  const previousProb = commitment.fulfillmentProbability ?? 90;
 
   if (!supply) {
     return {
@@ -40,7 +40,7 @@ export function evaluateCommitmentRisk(
 
   // 1. Base probability from supply prediction confidence & farmer reliability
   const baseConfidence = supply.predictionConfidence * 100;
-  const relScore = supply.farmerReliability?.overallScore || 75;
+  const relScore = supply.farmerReliability?.overallScore ?? 75;
   let score = baseConfidence * 0.6 + relScore * 0.4;
 
   // 2. Evaluate active regional shocks

@@ -78,7 +78,9 @@ export const NavigationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       setSelectedEntityId(entityId);
     }
     setCurrentPath(path);
-    window.history.pushState({}, '', path);
+    if (window.location.pathname !== path) {
+      window.history.pushState({}, '', path);
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setIsMobileSidebarOpen(false);
 

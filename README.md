@@ -63,6 +63,10 @@ npm run build
 
 ---
 
+## Verification before publishing
+
+Install dependencies using `npm ci` when using the committed lockfile. Run `npm test`, `npm run lint`, and `npm run build` before publishing changes. The unit tests cover domain engines, capacity reservations, shelf-life boundaries, and recovery allocation; integration tests exercise the simulated procurement lifecycle. Verify role navigation and browser storage behavior in the running UI. No live procurement, quality certification or payment service is tested by this suite.
+
 ## 👥 Role Personas Supported
 - **Farmer / FPO Grower**: Future crop registration, crop stage tracker, reliability scorecard, prediction intervals.
 - **Buyer Procurement Control Center**: Store-level demand planner, Bengaluru supply coverage calendar, matching & auto-replacement drawer.

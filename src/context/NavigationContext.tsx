@@ -5,7 +5,7 @@ export interface NavigationContextType {
   role: Role | 'SIMULATOR';
   setRole: (role: Role | 'SIMULATOR') => void;
   currentPath: string;
-  navigate: (path: string) => void;
+  navigate: (path: string, entityId?: string) => void;
   isSidebarCollapsed: boolean;
   toggleSidebar: () => void;
   isMobileSidebarOpen: boolean;

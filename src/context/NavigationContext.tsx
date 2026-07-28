@@ -43,7 +43,11 @@ export const NavigationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   });
 
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(() => {
-    return localStorage.getItem('futuresupply_sidebar_collapsed') === 'true';
+    try {
+      return localStorage.getItem('futuresupply_sidebar_collapsed') === 'true';
+    } catch {
+      return false;
+    }
   });
 
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
@@ -52,7 +56,11 @@ export const NavigationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const toggleSidebar = useCallback(() => {
     setIsSidebarCollapsed(prev => {
       const next = !prev;
-      localStorage.setItem('futuresupply_sidebar_collapsed', String(next));
+      try {
+        localStorage.setItem('futuresupply_sidebar_collapsed', String(next));
+      } catch {
+        // Preferences remain usable in memory when browser storage is unavailable.
+      }
       return next;
     });
   }, []);
